@@ -1,0 +1,49 @@
+# Byte-compiled / cache / logs
+__pycache__/
+*.py[cod]
+*.so
+*.log
+
+# Virtual environments
+venv/
+env/
+.imageenv/
+*.egg-info/
+pip-wheel-metadata/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Python-metadata
+*.pyo
+*.pyd
+
+# Data files
+data/
+datasets/
+*.zip
+*.tar.gz
+
+# Model checkpoints
+checkpoints/
+*.pth
+*.pt
+*.h5
+
+# TensorBoard logs
+runs/
+logs/
+
+# VS Code settings
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+
+# Other folders you might use
+outputs/
+cache/
