@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 from PIL import Image
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, DataLoader
 import torchvision.transforms as T
 import torch
 
@@ -105,8 +105,13 @@ if __name__ == "__main__":
         transform=my_transforms
     )
 
-    # Print a sample
-    img, cap = dataset[0]
-    print("Image shape:", img.shape)
-    print("Caption tensor:", cap)
 
+
+# DataLoader
+    loader = DataLoader(dataset, batch_size=32, shuffle=True)
+
+# Test batch
+    for imgs, caps in loader:
+        print(imgs.shape)  # [32, 3, 224, 224]
+        print(caps.shape)  # [32, 30]
+        break
