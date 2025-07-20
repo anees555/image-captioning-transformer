@@ -90,20 +90,4 @@ class PositionalEncoding(nn.Module):
         x = x + self.pe[:x.size(0)]
         return self.dropout(x)
 
-    # def generate(self, image, word2idx, max_length=30, device='cpu'):
-    #     self.eval()
-    #     with torch.no_grad():
-    #         features = self.encoder(image.unsqueeze(0).to(device))  # (1, d_model)
 
-    #         caption = [word2idx['<start>']]
-    #         for _ in range(max_length):
-    #             cap_tensor = torch.tensor(caption).unsqueeze(0).to(device)  # (1, seq_len)
-    #             output = self.decoder(cap_tensor, features)  # (1, seq_len, vocab_size)
-    #             next_word_logits = output[:, -1, :]  # (1, vocab_size)
-    #             next_word = next_word_logits.argmax(dim=-1).item()
-    #             caption.append(next_word)
-
-    #             if next_word == word2idx['<end>']:
-    #                 break
-
-    #     return caption

@@ -70,9 +70,9 @@ def train_model(
         if avg_loss < best_loss:
             best_loss = avg_loss
             torch.save(model.state_dict(), checkpoint_path)
-            print(f"✅ Saved best model with loss {best_loss:.4f} at {checkpoint_path}")
+            print(f" Saved best model with loss {best_loss:.4f} at {checkpoint_path}")
 
-    print("Training complete ✅")
+    print("Training complete ")
 
 # Optional: run directly if needed
 if __name__ == "__main__":
