@@ -106,7 +106,6 @@ if __name__ == "__main__":
     )
 
 
-
 # DataLoader
     loader = DataLoader(dataset, batch_size=32, shuffle=True)
 

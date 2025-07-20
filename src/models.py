@@ -3,7 +3,7 @@ import torch.nn as nn
 import torchvision.models as models
 
 class ImageCaptioningModel(nn.Module):
-    def __init__(self, embed_dim, vocab_size, decoder_dim=512, num_heads=8, num_layers=3, dropout=0.1):
+    def __init__(self, vocab_size, embed_dim, num_heads=8, num_layers=3, dropout=0.1, max_len=50):
         super(ImageCaptioningModel, self).__init__()
 
         # Encoder: CNN (ResNet50)
@@ -17,7 +17,7 @@ class ImageCaptioningModel(nn.Module):
 
         # Decoder: Transformer Decoder
         self.embedding = nn.Embedding(vocab_size, embed_dim)
-        self.pos_encoder = PositionalEncoding(embed_dim, dropout=dropout)
+        self.pos_encoder = PositionalEncoding(embed_dim, dropout=dropout, max_len=max_len)
 
         decoder_layer = nn.TransformerDecoderLayer(
             d_model=embed_dim, nhead=num_heads, dropout=dropout
@@ -73,8 +73,13 @@ class PositionalEncoding(nn.Module):
         pe = torch.zeros(max_len, d_model)  # [max_len, d_model]
         position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)  # [max_len, 1]
         div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-torch.log(torch.tensor(10000.0)) / d_model))
+        
         pe[:, 0::2] = torch.sin(position * div_term)  # dim 2i
-        pe[:, 1::2] = torch.cos(position * div_term)  # dim 2i+1
+        if d_model % 2 == 1:  # Handle odd dimensions
+            pe[:, 1::2] = torch.cos(position * div_term[:-1])  # dim 2i+1, exclude last element
+        else:
+            pe[:, 1::2] = torch.cos(position * div_term)  # dim 2i+1
+            
         pe = pe.unsqueeze(1)  # [max_len, 1, d_model]
         self.register_buffer('pe', pe)
 
